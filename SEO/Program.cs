@@ -12,16 +12,22 @@ namespace SEO
         {
             string url = "http://www.kretschmer-und-kretschmer.de";
 
-            var validators = new List<Model.IPageValidator>
+            var pageValidators = new List<Model.IPageValidator>
             {
-                new SEO.LinkAnalyzer(),
-                new SEO.HeadValidator(),
-                new SEO.HeadlineValidator()
+                new PageValidators.LinkAnalyzer(),
+                new PageValidators.HeadValidator(),
+                new PageValidators.HeadlineValidator(),
+                new PageValidators.TagFoundEmitter()
+            };
+
+            var websiteValidators = new List<Model.IWebsiteValidator>
+            {
+                new WebsiteValidators.HeadValidator()
             };
 
             var allowedPaths = new List<string> { "kretschmer-und-kretschmer.de", "www.kretschmer-und-kretschmer.de" };
 
-            website = new Model.Website(url, validators, allowedPaths);
+            website = new Model.Website(url, pageValidators, websiteValidators, allowedPaths);
             var hints = website.GetAllHints();
 
             Console.WriteLine(JObject.FromObject(website));

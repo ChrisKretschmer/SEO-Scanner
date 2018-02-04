@@ -8,6 +8,7 @@ namespace SEO.Model
         public int Position { get; set; }
         public string Code { get; set; }
         public Severity Severity { get; set; }
+        public string AdditionalInfo { get; set; }
 
         public Hint(string code, string message) : this(code, message, Severity.Minor) { }
 

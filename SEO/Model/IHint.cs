@@ -10,8 +10,7 @@
     public interface IHint
     {
         string Message { get; set; }
-        int Line { get; set; }
-        int Position { get; set; }
+        string AdditionalInfo { get; set; }
 
         string Code { get; set; }
 

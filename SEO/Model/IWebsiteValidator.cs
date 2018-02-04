@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EventBus;
 
 namespace SEO.Model
 {
-    interface IWebsiteValidator
+    public interface IWebsiteValidator
     {
+        void Initialize(IAnalyzableWebsite website, SimpleEventBus eventBus);
     }
 }

@@ -3,11 +3,11 @@ using SEO.DomainEvents;
 using SEO.Model;
 using System;
 
-namespace SEO
+namespace SEO.PageValidators
 {
     public class LinkAnalyzer : IPageValidator
     {
-        public void Validate(IAnalyzableElement page, SimpleEventBus eventBus)
+        public void Validate(IAnalyzablePage page, SimpleEventBus eventBus)
         {
             var content = page.GetHtmlDocument();
 

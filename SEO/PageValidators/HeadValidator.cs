@@ -1,19 +1,19 @@
 ﻿using EventBus;
 using SEO.Model;
 
-namespace SEO
+namespace SEO.PageValidators
 {
     public class HeadValidator : IPageValidator
     {
         const int TITLE_TAG_MAX_LENGTH = 60;
         const int TITLE_TAG_MIN_LENGTH = 10;
 
-        public void Validate(IAnalyzableElement page, SimpleEventBus eventBus)
+        public void Validate(IAnalyzablePage page, SimpleEventBus eventBus)
         {
             CheckTitleTag(page);
         }
 
-        private void CheckTitleTag(IAnalyzableElement page)
+        private void CheckTitleTag(IAnalyzablePage page)
         {
             var titleElements = page.GetHtmlDocument().DocumentNode.SelectNodes("//title");
 

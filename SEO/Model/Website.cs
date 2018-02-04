@@ -6,24 +6,29 @@ using System.Collections.Generic;
 
 namespace SEO.Model
 {
-    public class Website
+    public class Website : IAnalyzableWebsite
     {
         public Uri startURL { get; }
-        internal List<IPageValidator> Validators { get; }
+        internal List<IPageValidator> PageValidators { get; }
+        internal List<IWebsiteValidator> WebsiteValidators { get; }
 
         [JsonProperty()]
         internal List<Page> ProcessedPages = new List<Page>();
         internal Queue<Page> Pages = new Queue<Page>();
         internal List<string> AllowedDomains;
 
+        [JsonProperty()]
+        internal List<IHint> FoundHints = new List<IHint>();
+
         private List<IHint> allHints = new List<IHint>();
         private SimpleEventBus eventBus = SimpleEventBus.GetDefaultEventBus();
 
-        public Website (string url, List<IPageValidator> validators, List<string> allowedDomains)
+        public Website (string url, List<IPageValidator> pageValidators, List<IWebsiteValidator> websiteValidators, List<string> allowedDomains)
         {
             startURL = new Uri(url);
             AllowedDomains = allowedDomains;
-            Validators = validators;
+            PageValidators = pageValidators;
+            WebsiteValidators = websiteValidators;
             eventBus.Register(this);
         }
 
@@ -31,10 +36,27 @@ namespace SEO.Model
         {
 
             AddNewURL(startURL);
+            InitWebsiteValidators();
             ProcessList();
 
 
             return allHints;
+        }
+
+        private void InitWebsiteValidators()
+        {
+            foreach (IWebsiteValidator validator in WebsiteValidators)
+            {
+                // the Validate Method injects the found hints directly into the Page object
+                try
+                {
+                    validator.Initialize(this, eventBus);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Failed to initialize WebsiteValidator" + ex.Message);
+                }
+            }
         }
 
         private void ProcessList()
@@ -67,6 +89,15 @@ namespace SEO.Model
         public void HandleEvent(PageFound pageFoundEvent)
         {
             AddNewURL(pageFoundEvent.Url);
+        }
+
+        #endregion
+
+        #region Website Hints
+
+        public void AddHint(IHint hint)
+        {
+            FoundHints.Add(hint);
         }
 
         #endregion

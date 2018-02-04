@@ -1,7 +1,7 @@
 ﻿using EventBus;
 using SEO.Model;
 
-namespace SEO
+namespace SEO.PageValidators
 {
     class HeadlineValidator : IPageValidator
     {
@@ -19,7 +19,7 @@ namespace SEO
         const int MAX_H5_COUNT = 10;
         const int MAX_H6_COUNT = 10;
 
-        public void Validate(IAnalyzableElement page, SimpleEventBus eventBus)
+        public void Validate(IAnalyzablePage page, SimpleEventBus eventBus)
         {
             CheckHeadlines(page, "h1", MIN_H1_COUNT, MAX_H1_COUNT);
             CheckHeadlines(page, "h2", MIN_H2_COUNT, MAX_H2_COUNT);
@@ -29,7 +29,7 @@ namespace SEO
             CheckHeadlines(page, "h6", MIN_H6_COUNT, MAX_H6_COUNT);
         }
 
-        public void CheckHeadlines(IAnalyzableElement page, string tag, int min, int max)
+        public void CheckHeadlines(IAnalyzablePage page, string tag, int min, int max)
         {
             var headlineElements = page.GetHtmlDocument().DocumentNode.SelectNodes("//" + tag);
             if (headlineElements == null)

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace SEO.Model
 {
-    internal class Page : IAnalyzableElement
+    internal class Page : IAnalyzablePage
     {
         private Website Website { get; }
         public Uri Uri { get; }
@@ -28,7 +28,7 @@ namespace SEO.Model
 
         public List<IHint> GetHints()
         {
-            foreach (IPageValidator validator in Website.Validators)
+            foreach (IPageValidator validator in Website.PageValidators)
             {
                 // the Validate Method injects the found hints directly into the Page object
                 try
@@ -37,7 +37,7 @@ namespace SEO.Model
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Failed to process " + Uri);
+                    Console.WriteLine("Failed to process " + Uri + " " + ex.Message);
                 }
             }
             Cleanup();

@@ -4,7 +4,7 @@ using HtmlAgilityPack;
 
 namespace SEO.Model
 {
-    public interface IAnalyzableElement
+    public interface IAnalyzablePage
     {
         WebResponse GetPageRequestObject();
         string GetPageContent();

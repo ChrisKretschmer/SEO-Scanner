@@ -4,6 +4,6 @@ namespace SEO.Model
 {
     public interface IPageValidator
     {
-        void Validate(IAnalyzableElement page, SimpleEventBus eventBus);
+        void Validate(IAnalyzablePage page, SimpleEventBus eventBus);
     }
 }
