@@ -8,18 +8,18 @@ namespace SEO.Model
 {
     public class Website
     {
-        public Uri startURL { get; private set; }
-        internal List<IValidator> Validators { get; private set; }
+        public Uri startURL { get; }
+        internal List<IPageValidator> Validators { get; }
 
         [JsonProperty()]
         internal List<Page> ProcessedPages = new List<Page>();
         internal Queue<Page> Pages = new Queue<Page>();
-        internal List<string> AllowedDomains = new List<string>();
+        internal List<string> AllowedDomains;
 
         private List<IHint> allHints = new List<IHint>();
         private SimpleEventBus eventBus = SimpleEventBus.GetDefaultEventBus();
 
-        public Website (string url, List<IValidator> validators, List<string> allowedDomains)
+        public Website (string url, List<IPageValidator> validators, List<string> allowedDomains)
         {
             startURL = new Uri(url);
             AllowedDomains = allowedDomains;
@@ -56,7 +56,7 @@ namespace SEO.Model
             if (!Pages.Contains(page) && !ProcessedPages.Contains(page) && AllowedDomains.Contains(url.Host))
             {
                 Pages.Enqueue(page);
-                Console.WriteLine("Found new url: " + url);
+                Console.WriteLine("Found new Uri: " + url);
             }           
             
         }
@@ -66,7 +66,7 @@ namespace SEO.Model
         [EventSubscriber]
         public void HandleEvent(PageFound pageFoundEvent)
         {
-            AddNewURL(pageFoundEvent.URL);
+            AddNewURL(pageFoundEvent.Url);
         }
 
         #endregion

@@ -1,9 +1,9 @@
 ﻿using EventBus;
 using SEO.Model;
 
-namespace SEO.Validators.HeadValidator
+namespace SEO
 {
-    public class HeadValidator : IValidator
+    public class HeadValidator : IPageValidator
     {
         const int TITLE_TAG_MAX_LENGTH = 60;
         const int TITLE_TAG_MIN_LENGTH = 10;

@@ -2,7 +2,7 @@
 
 namespace SEO.Model
 {
-    public interface IValidator
+    public interface IPageValidator
     {
         void Validate(IAnalyzableElement page, SimpleEventBus eventBus);
     }

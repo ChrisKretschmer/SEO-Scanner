@@ -4,11 +4,11 @@ namespace SEO.DomainEvents
 {
     public class PageFound : SimpleEvent
     {
-        public Uri URL { get; set; }
+        public Uri Url { get; set; }
 
         public PageFound(Uri url)
         {
-            URL = url;
+            Url = url;
         }
     }
 }

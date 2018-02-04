@@ -3,9 +3,9 @@ using SEO.DomainEvents;
 using SEO.Model;
 using System;
 
-namespace SEO.Validators.LinkAnalyzer
+namespace SEO
 {
-    public class LinkAnalyzer : IValidator
+    public class LinkAnalyzer : IPageValidator
     {
         public void Validate(IAnalyzableElement page, SimpleEventBus eventBus)
         {
@@ -18,15 +18,7 @@ namespace SEO.Validators.LinkAnalyzer
                 var url = link.GetAttributeValue("href", null);
 
                 if (url != null) {
-                    Uri uri;
-                    if (IsAbsoluteUrl(url))
-                    {
-                        uri = new Uri(url);
-                    }
-                    else
-                    {
-                        uri = new Uri(page.url, url);
-                    }
+                    Uri uri = IsAbsoluteUrl(url) ? new Uri(url) : new Uri(page.Uri, url);
                     eventBus.Post(new PageFound(uri), TimeSpan.Zero);
                 }
             }

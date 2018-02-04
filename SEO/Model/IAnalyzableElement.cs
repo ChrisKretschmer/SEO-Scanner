@@ -10,7 +10,7 @@ namespace SEO.Model
         string GetPageContent();
         HtmlDocument GetHtmlDocument();
 
-        Uri url { get; }
+        Uri Uri { get; }
 
         void AddHint(IHint hint);
     }

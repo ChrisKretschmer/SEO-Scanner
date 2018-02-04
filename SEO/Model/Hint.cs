@@ -1,6 +1,5 @@
-﻿using SEO.Model;
-
-namespace SEO.Validators
+﻿
+namespace SEO.Model
 {
     public class Hint : IHint
     {
@@ -16,11 +15,11 @@ namespace SEO.Validators
 
         public Hint(string code, string message, Severity severity, int line, int position)
         {
-            this.Message = message;
-            this.Line = line;
-            this.Position = position;
-            this.Severity = severity;
-            this.Code = code;
+            Message = message;
+            Line = line;
+            Position = position;
+            Severity = severity;
+            Code = code;
         }
     }
 }

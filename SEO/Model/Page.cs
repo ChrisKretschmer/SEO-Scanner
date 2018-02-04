@@ -10,8 +10,8 @@ namespace SEO.Model
 {
     internal class Page : IAnalyzableElement
     {
-        private Website website { get; set; }
-        public Uri url { get; private set; }
+        private Website Website { get; }
+        public Uri Uri { get; }
 
         private WebResponse cachedResponse;
         private HtmlDocument cachedHtmlDocument;
@@ -20,15 +20,15 @@ namespace SEO.Model
         [JsonProperty()]
         internal List<IHint> FoundHints = new List<IHint>();
 
-        internal Page(Website website, Uri url)
+        internal Page(Website website, Uri uri)
         {
-            this.website = website;
-            this.url = url;
+            Website = website;
+            Uri = uri;
         }
 
         public List<IHint> GetHints()
         {
-            foreach (IValidator validator in website.Validators)
+            foreach (IPageValidator validator in Website.Validators)
             {
                 // the Validate Method injects the found hints directly into the Page object
                 try
@@ -37,7 +37,7 @@ namespace SEO.Model
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Failed to process " + url);
+                    Console.WriteLine("Failed to process " + Uri);
                 }
             }
             Cleanup();
@@ -52,7 +52,7 @@ namespace SEO.Model
         {
             if (cachedResponse == null)
             {
-                WebRequest request = WebRequest.Create(url);
+                WebRequest request = WebRequest.Create(Uri);
                 request.Method = "GET";
                 WebResponse response = request.GetResponseAsync().Result;
                 cachedResponse = response;
@@ -102,16 +102,15 @@ namespace SEO.Model
 
         public override bool Equals(Object obj)
         {
-            Page pageObj = obj as Page;
-            if (pageObj == null)
+            if (!(obj is Page pageObj))
                 return false;
             else
-                return url.Equals(pageObj.url);
+                return Uri.Equals(pageObj.Uri);
         }
 
         public override int GetHashCode()
         {
-            return this.url.GetHashCode();
+            return Uri.GetHashCode();
         }
     }
 }

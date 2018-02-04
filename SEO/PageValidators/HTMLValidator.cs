@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SEO.Validators.HTMLValidator
+namespace SEO
 {
     class HTMLValidator
     {

@@ -1,9 +1,9 @@
 ﻿using EventBus;
 using SEO.Model;
 
-namespace SEO.Validators.HeadlineValidator
+namespace SEO
 {
-    class HeadlineValidator : IValidator
+    class HeadlineValidator : IPageValidator
     {
         const int MIN_H1_COUNT = 1;
         const int MIN_H2_COUNT = 0;
