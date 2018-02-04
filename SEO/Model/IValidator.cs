@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EventBus;
 
 namespace SEO.Model
 {
     public interface IValidator
     {
-        void Validate(IAnalyzableElement page);
+        void Validate(IAnalyzableElement page, SimpleEventBus eventBus);
     }
 }

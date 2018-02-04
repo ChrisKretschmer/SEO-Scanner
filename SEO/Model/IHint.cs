@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SEO.Model
+﻿namespace SEO.Model
 {
     public enum Severity
     {
@@ -20,7 +16,6 @@ namespace SEO.Model
         string Code { get; set; }
 
         Severity Severity { get; set; }
-
 
     }
 }

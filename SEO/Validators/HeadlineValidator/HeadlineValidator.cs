@@ -1,7 +1,5 @@
-﻿using SEO.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EventBus;
+using SEO.Model;
 
 namespace SEO.Validators.HeadlineValidator
 {
@@ -21,7 +19,7 @@ namespace SEO.Validators.HeadlineValidator
         const int MAX_H5_COUNT = 10;
         const int MAX_H6_COUNT = 10;
 
-        public void Validate(IAnalyzableElement page)
+        public void Validate(IAnalyzableElement page, SimpleEventBus eventBus)
         {
             CheckHeadlines(page, "h1", MIN_H1_COUNT, MAX_H1_COUNT);
             CheckHeadlines(page, "h2", MIN_H2_COUNT, MAX_H2_COUNT);

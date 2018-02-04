@@ -1,15 +1,13 @@
-﻿using SEO.Model;
+﻿using EventBus;
+using SEO.DomainEvents;
+using SEO.Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace SEO.Validators.LinkAnalyzer
 {
     public class LinkAnalyzer : IValidator
     {
-        public void Validate(IAnalyzableElement page)
+        public void Validate(IAnalyzableElement page, SimpleEventBus eventBus)
         {
             var content = page.GetHtmlDocument();
 
@@ -17,11 +15,27 @@ namespace SEO.Validators.LinkAnalyzer
 
             foreach (var link in links)
             {
-                var hint = new Hint("Test", link.GetAttributeValue("href", null));
-                if (hint != null) {
-                    page.AddHint(hint);
+                var url = link.GetAttributeValue("href", null);
+
+                if (url != null) {
+                    Uri uri;
+                    if (IsAbsoluteUrl(url))
+                    {
+                        uri = new Uri(url);
+                    }
+                    else
+                    {
+                        uri = new Uri(page.url, url);
+                    }
+                    eventBus.Post(new PageFound(uri), TimeSpan.Zero);
                 }
             }
+        }
+
+        private bool IsAbsoluteUrl(string url)
+        {
+            Uri result;
+            return Uri.TryCreate(url, UriKind.Absolute, out result);
         }
 
     }

@@ -1,7 +1,5 @@
-﻿using SEO.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EventBus;
+using SEO.Model;
 
 namespace SEO.Validators.HeadValidator
 {
@@ -10,7 +8,7 @@ namespace SEO.Validators.HeadValidator
         const int TITLE_TAG_MAX_LENGTH = 60;
         const int TITLE_TAG_MIN_LENGTH = 10;
 
-        public void Validate(IAnalyzableElement page)
+        public void Validate(IAnalyzableElement page, SimpleEventBus eventBus)
         {
             CheckTitleTag(page);
         }

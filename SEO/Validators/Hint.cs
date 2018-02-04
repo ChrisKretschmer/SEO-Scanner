@@ -1,7 +1,4 @@
 ﻿using SEO.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SEO.Validators
 {
@@ -25,6 +22,5 @@ namespace SEO.Validators
             this.Severity = severity;
             this.Code = code;
         }
-
     }
 }

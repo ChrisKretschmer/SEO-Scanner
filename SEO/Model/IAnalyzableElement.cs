@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using HtmlAgilityPack;
 
 namespace SEO.Model
@@ -11,6 +9,8 @@ namespace SEO.Model
         WebResponse GetPageRequestObject();
         string GetPageContent();
         HtmlDocument GetHtmlDocument();
+
+        Uri url { get; }
 
         void AddHint(IHint hint);
     }

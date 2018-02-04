@@ -2,31 +2,28 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using EventBus;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
 
 namespace SEO.Model
 {
     internal class Page : IAnalyzableElement
     {
         private Website website { get; set; }
-        private string url;
+        public Uri url { get; private set; }
 
         private WebResponse cachedResponse;
         private HtmlDocument cachedHtmlDocument;
+        private SimpleEventBus eventBus = SimpleEventBus.GetDefaultEventBus();
 
+        [JsonProperty()]
         internal List<IHint> FoundHints = new List<IHint>();
 
-        internal Page(Website website, string url)
+        internal Page(Website website, Uri url)
         {
             this.website = website;
             this.url = url;
-        }
-
-        ~Page()
-        {
-            cachedResponse.Dispose();
         }
 
         public List<IHint> GetHints()
@@ -34,8 +31,16 @@ namespace SEO.Model
             foreach (IValidator validator in website.Validators)
             {
                 // the Validate Method injects the found hints directly into the Page object
-                validator.Validate(this);
+                try
+                {
+                    validator.Validate(this, eventBus);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Failed to process " + url);
+                }
             }
+            Cleanup();
             return FoundHints;
         }
         
@@ -56,12 +61,26 @@ namespace SEO.Model
             return cachedResponse;
         }
 
+        private void Cleanup()
+        {
+            if (cachedResponse != null)
+            {
+                cachedResponse.Close();
+                cachedResponse.Dispose();
+            }
+
+            cachedResponse = null;
+            cachedHtmlDocument = null;
+
+        }
+
         public string GetPageContent()
         {
             Stream stream = GetPageRequestObject().GetResponseStream();
             StreamReader reader = new StreamReader(stream);
             string content = reader.ReadToEnd();
-            reader.Dispose();
+            reader.Close();
+            stream.Close();
 
             return content;
         }
@@ -81,5 +100,18 @@ namespace SEO.Model
             return cachedHtmlDocument;
         }
 
+        public override bool Equals(Object obj)
+        {
+            Page pageObj = obj as Page;
+            if (pageObj == null)
+                return false;
+            else
+                return url.Equals(pageObj.url);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.url.GetHashCode();
+        }
     }
 }
