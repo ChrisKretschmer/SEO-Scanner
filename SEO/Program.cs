@@ -14,11 +14,12 @@ namespace SEO
 
             var pageValidators = new List<Model.IPageValidator>
             {
-                new PageValidators.LinkAnalyzer(),
-                new PageValidators.HTMLValidator(),
-                new PageValidators.HeadValidator(),
-                new PageValidators.HeadlineValidator(),
-                new PageValidators.TagFoundEmitter()
+                //new PageValidators.LinkAnalyzer(),
+                //new PageValidators.HTMLValidator(),
+                //new PageValidators.HeadValidator(),
+                //new PageValidators.HeadlineValidator(),
+                //new PageValidators.TagFoundEmitter(),
+                new PageValidators.SSLChecker()
             };
 
             var websiteValidators = new List<Model.IWebsiteValidator>
