@@ -30,9 +30,10 @@ namespace SEO.PageValidators
                                 case "error":
                                     hint.Severity = Severity.HtmlError;
                                     break;
-                                case "warning":
-                                    hint.Severity = Severity.HtmlWarning;
+                                case "non-document-error":
+                                    hint.Severity = Severity.HtmlError;
                                     break;
+                                case "info":
                                 default:
                                     hint.Severity = Severity.HtmlHint;
                                     break;
