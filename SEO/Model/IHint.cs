@@ -4,7 +4,11 @@
     {
         Minor,
         Major,
-        Critical
+        Critical,
+
+        HtmlError,
+        HtmlWarning,
+        HtmlHint
     }
 
     public interface IHint

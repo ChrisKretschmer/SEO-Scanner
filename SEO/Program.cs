@@ -14,6 +14,7 @@ namespace SEO
 
             var pageValidators = new List<Model.IPageValidator>
             {
+                new PageValidators.HTMLValidator(),
                 new PageValidators.LinkAnalyzer(),
                 new PageValidators.HeadValidator(),
                 new PageValidators.HeadlineValidator(),
