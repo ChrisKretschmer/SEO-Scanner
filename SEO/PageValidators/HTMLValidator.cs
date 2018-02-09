@@ -24,21 +24,29 @@ namespace SEO.PageValidators
                     foreach (var message in jsonObject["messages"])
                     {
                         var hint = new Hint("HTML-Hint", message["message"].ToString());
-                        switch (message["type"].ToString())
-                        {
-                            case "error":
-                                hint.Severity = Severity.HtmlError;
-                                break;
-                            case "warning": 
-                                hint.Severity = Severity.HtmlWarning;
-                                break;
-                            default:
-                                hint.Severity = Severity.HtmlHint;
-                                break;
+                        if(message["type"] != null) {
+                            switch (message["type"].ToString())
+                            {
+                                case "error":
+                                    hint.Severity = Severity.HtmlError;
+                                    break;
+                                case "warning":
+                                    hint.Severity = Severity.HtmlWarning;
+                                    break;
+                                default:
+                                    hint.Severity = Severity.HtmlHint;
+                                    break;
+                            }
                         }
-                        hint.Line = Int32.Parse(message["lastLine"].ToString());
-                        hint.Position = Int32.Parse(message["firstColumn"].ToString());
 
+                        if (message["lastLine"] != null)
+                        {
+                            hint.Line = Int32.Parse(message["lastLine"].ToString());
+                        }
+                        if (message["firstColumn"] != null)
+                        {
+                            hint.Line = Int32.Parse(message["firstColumn"].ToString());
+                        }
                         page.AddHint(hint);
                     }
                 }
