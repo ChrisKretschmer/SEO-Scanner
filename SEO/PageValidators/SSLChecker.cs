@@ -9,7 +9,7 @@ namespace SEO.PageValidators
         {
             var request = page.GetPageRequestObject();
 
-            if (request.ResponseUri.Scheme == "http")
+            if (request.ResponseUri.Scheme.ToLowerInvariant() == "http")
             {
                 page.AddHint(new Hint("Protocol-HTTP", "The page was served using HTTP. Please use HTTPS!"));
             }
